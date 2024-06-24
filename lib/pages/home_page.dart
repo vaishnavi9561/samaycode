@@ -1,7 +1,11 @@
+// home_page.dart
 import 'package:flutter/material.dart';
 import 'package:website/widgets/drawer_mobile.dart';
 import 'package:website/widgets/header_desktop.dart';
 import 'package:website/widgets/header_mobile.dart';
+import '../widgets/desktop_enquiry_form.dart';
+import '../widgets/mobile_enquiry_form.dart';
+import '../widgets/tablet_enquiry_form.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -165,17 +169,14 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.white.withOpacity(0.7),
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                              serviceNames[index],
+                            serviceNames[index],
                             style: TextStyle(fontSize: 16, color: Colors.black),
                             textAlign: TextAlign.center,
                           ),
-
                         ),
-
                       );
                     },
                   ),
-
                 ),
                 Text(
                   'Samay is an all-in-one super app designed to simplify the appointment\n booking process across various services, including doctors, salons, spas, gyms, yoga classes, job searches, tattoo artists, events, school appointments, hotels, and restaurants. Users can effortlessly schedule appointments, manage their booking history, and store medical records in one unified platform.',
@@ -186,23 +187,45 @@ class _HomePageState extends State<HomePage> {
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                   ),
-                )
+                ),
               ],
             ),
           ),
-          Container(
-            width: 1513,
-            height: 871,
-            decoration: BoxDecoration(color: Color(0xFFCCFF8D)),
+          Center(
+            child: Container(
+              width: 1513,
+              height: 871,
+              decoration: BoxDecoration(color: Color(0xFFCCFF8D)),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: 400,
+                    ),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        if (constraints.maxWidth < 600) {
+                          return MobileEnquiryForm();
+                        } else if (constraints.maxWidth < 1200) {
+                          return TabletEnquiryForm();
+                        } else {
+                          return DesktopEnquiryForm();
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
-
           Container(
             height: 300,
-            color: Colors.blue,
+            color: Colors.black,
             child: Center(
               child: Text(
-                  'Additional Section',
-                  style: TextStyle(
+                'Additional Section',
+                style: TextStyle(
                   fontSize: 24,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
